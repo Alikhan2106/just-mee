@@ -1,66 +1,56 @@
 "use client";
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import confetti from 'canvas-confetti';
 
 export default function CakeInteraction({ onNext }) {
-  const [lit, setLit] = useState(true);
-
-  const blowCandles = () => {
-    setLit(false);
-    confetti({
-      particleCount: 200,
-      spread: 100,
-      origin: { y: 0.5 },
-    });
-  };
+  const [candlesLit, setCandlesLit] = useState(true);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center">
-      <h2 className="text-3xl md:text-4xl font-bold text-pink-600 mb-2">Make a Wish! 🕯️</h2>
-      <p className="text-gray-500 mb-10 italic">Click the flames to blow out the candles</p>
+    <div className="flex flex-col items-center justify-center min-h-[calc(100dvh-5rem)] p-4 text-center font-serif">
+      <h2 className="text-2xl sm:text-4xl font-bold text-pink-600 mb-2">
+        Make a Wish & Blow Out the Candles 🎂
+      </h2>
+      <p className="text-gray-500 text-xs sm:text-sm mb-6">
+        {candlesLit ? "Tap the candles to blow them out!" : "Your wish has been sent to the stars! ✨"}
+      </p>
 
-      {/* Cake Container */}
-      <div className="relative cursor-pointer" onClick={blowCandles}>
+      {/* Responsive Cake Visual */}
+      <div 
+        onClick={() => setCandlesLit(false)}
+        className="relative cursor-pointer my-4 p-4 flex flex-col items-center justify-center select-none"
+      >
         {/* Flames */}
-        <div className="flex justify-center gap-6 mb-1">
+        <div className="flex gap-4 sm:gap-6 mb-1">
           {[1, 2, 3].map((i) => (
             <div key={i} className="flex flex-col items-center">
-              {lit && (
-                <motion.div 
-                  animate={{ scale: [1, 1.2, 1], y: [0, -2, 0] }}
-                  transition={{ repeat: Infinity, duration: 0.6 }}
-                  className="w-4 h-6 bg-gradient-to-t from-orange-500 via-amber-400 to-yellow-200 rounded-full blur-[1px]"
+              {candlesLit && (
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
+                  transition={{ repeat: Infinity, duration: 0.6 + i * 0.1 }}
+                  className="w-3 h-4 bg-amber-400 rounded-full blur-[1px] shadow-[0_0_10px_#f59e0b]"
                 />
               )}
-              <div className="w-2 h-10 bg-pink-300 rounded-t-sm" />
+              <div className="w-1.5 h-6 bg-pink-300 rounded-t" />
             </div>
           ))}
         </div>
 
-        {/* Cake Layers */}
-        <div className="w-56 h-20 bg-pink-200 rounded-t-3xl border-b-4 border-pink-300 flex items-center justify-center shadow-inner">
-          <span className="text-pink-400 text-xl font-bold">✨ ✨ ✨</span>
+        {/* Cake Body */}
+        <div className="w-44 sm:w-60 h-20 sm:h-28 bg-pink-300 rounded-t-3xl border-b-8 border-pink-400 relative shadow-md flex items-center justify-center text-2xl">
+          🍓 🍰 🍓
         </div>
-        <div className="w-72 h-24 bg-pink-300 rounded-b-3xl shadow-xl flex items-center justify-center">
-          <span className="text-white text-2xl font-bold">Happy Birthday!</span>
-        </div>
+        <div className="w-52 sm:w-72 h-8 sm:h-10 bg-amber-100 rounded-b-2xl shadow-lg border-t-2 border-amber-200" />
       </div>
 
-      {!lit && (
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }} 
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-8 space-y-4"
+      {!candlesLit && (
+        <motion.button
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          onClick={onNext}
+          className="mt-6 px-8 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold rounded-full shadow-lg text-sm sm:text-base min-h-[44px]"
         >
-          <p className="text-xl text-pink-600 font-semibold">May all your wishes come true! 🎉</p>
-          <button 
-            onClick={onNext}
-            className="px-8 py-3 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition-all shadow-md"
-          >
-            Final Surprise 🎆
-          </button>
-        </motion.div>
+          See Final Surprise ✨
+        </motion.button>
       )}
     </div>
   );

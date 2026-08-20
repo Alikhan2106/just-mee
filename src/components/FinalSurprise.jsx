@@ -4,7 +4,7 @@ import confetti from 'canvas-confetti';
 
 export default function FinalSurprise({ name = "Zahin", onReplay, onHome }) {
   const triggerFireworks = () => {
-    const count = 200;
+    const count = 180;
     const defaults = { origin: { y: 0.7 } };
 
     function fire(particleRatio, opts) {
@@ -23,67 +23,64 @@ export default function FinalSurprise({ name = "Zahin", onReplay, onHome }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-900 to-pink-950 text-white flex flex-col items-center justify-center p-6 text-center relative overflow-hidden font-serif">
+    <div className="min-h-[100dvh] bg-gradient-to-b from-indigo-950 via-purple-900 to-pink-950 text-white flex flex-col items-center justify-center p-4 sm:p-6 text-center relative overflow-hidden font-serif">
       {/* Floating lanterns */}
       <div className="absolute inset-0 pointer-events-none">
-        {[1, 2, 3, 4, 5].map((i) => (
+        {[1, 2, 3, 4].map((i) => (
           <motion.div
             key={i}
-            initial={{ y: '100vh', x: `${i * 18}%` }}
+            initial={{ y: '100vh', x: `${i * 22}%` }}
             animate={{ y: '-10vh' }}
             transition={{ repeat: Infinity, duration: 12 + i * 2, ease: "linear" }}
-            className="w-8 h-12 bg-amber-400/80 rounded-t-full rounded-b-lg blur-[1px] shadow-[0_0_15px_rgba(251,191,36,0.8)] absolute"
+            className="w-6 sm:w-8 h-9 sm:h-12 bg-amber-400/80 rounded-t-full rounded-b-lg blur-[1px] shadow-[0_0_15px_rgba(251,191,36,0.8)] absolute"
           />
         ))}
       </div>
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1 }}
-        className="z-10 max-w-xl bg-white/10 backdrop-blur-md p-6 md:p-8 rounded-3xl border border-white/20 shadow-2xl flex flex-col items-center"
+        transition={{ duration: 0.8 }}
+        className="z-10 max-w-sm sm:max-w-xl bg-white/10 backdrop-blur-md p-5 sm:p-8 rounded-3xl border border-white/20 shadow-2xl flex flex-col items-center w-full"
       >
-        {/* Main Portrait Frame */}
-        <motion.div 
-          whileHover={{ scale: 1.03, rotate: 1 }}
-          className="w-48 h-64 md:w-56 md:h-72 bg-white p-3 rounded-2xl shadow-2xl mb-6 border-2 border-pink-300 transform -rotate-1"
-        >
+        {/* Aspect-ratio safe portrait frame */}
+        <div className="w-36 h-48 sm:w-52 sm:h-68 bg-white p-2.5 rounded-2xl shadow-xl mb-4 sm:mb-6 border-2 border-pink-300 transform -rotate-1">
           <img 
             src="/assets/zahin-portrait.jpg" 
             alt="Zahin" 
             className="w-full h-full object-cover rounded-xl"
           />
-        </motion.div>
+        </div>
 
-        <h1 className="text-3xl md:text-5xl font-bold text-pink-300 mb-4">
+        <h1 className="text-2xl sm:text-4xl font-bold text-pink-300 mb-2 sm:mb-3">
           Happy Birthday, {name}! ❤️
         </h1>
         
-        <p className="text-base md:text-lg text-purple-100 italic leading-relaxed mb-8">
+        <p className="text-xs sm:text-base text-purple-100 italic leading-relaxed mb-6">
           "You are my favorite thought, my happiest place, and my favorite adventure. Thank you for being everything you are."
         </p>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center w-full">
+        <div className="flex flex-col sm:flex-row gap-2.5 justify-center items-center w-full">
           <button
             onClick={triggerFireworks}
-            className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold rounded-full shadow-lg shadow-pink-500/50 transition-all transform hover:scale-105 text-sm"
+            className="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold rounded-full shadow-lg shadow-pink-500/50 text-xs sm:text-sm min-h-[42px]"
           >
             Fireworks 🎆
           </button>
 
           <button
             onClick={onReplay}
-            className="w-full sm:w-auto px-6 py-3 bg-white/20 hover:bg-white/30 text-white font-medium rounded-full border border-white/30 backdrop-blur-md transition-all transform hover:scale-105 text-sm"
+            className="w-full sm:w-auto px-5 py-2.5 bg-white/20 hover:bg-white/30 text-white font-medium rounded-full border border-white/30 backdrop-blur-md text-xs sm:text-sm min-h-[42px]"
           >
             Replay Surprise 🔄
           </button>
 
           <button
             onClick={onHome}
-            className="w-full sm:w-auto px-6 py-3 bg-white/10 hover:bg-white/20 text-white/80 font-medium rounded-full border border-white/10 backdrop-blur-md transition-all text-sm"
+            className="w-full sm:w-auto px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white/80 font-medium rounded-full border border-white/10 backdrop-blur-md text-xs sm:text-sm min-h-[42px]"
           >
-            Back to Home 🏠
+            Home 🏠
           </button>
         </div>
       </motion.div>
