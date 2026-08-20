@@ -1,4 +1,4 @@
-// components/Hero.jsx
+"use client";
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
@@ -7,45 +7,50 @@ export default function Hero({ onEnter }) {
   const [dodgeY, setDodgeY] = useState(0);
 
   const handleDodge = () => {
-    setDodgeX(Math.random() * 200 - 100);
-    setDodgeY(Math.random() * 200 - 100);
+    setDodgeX(Math.random() * 160 - 80);
+    setDodgeY(Math.random() * 160 - 80);
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-pink-50 to-purple-100 flex flex-col items-center justify-center overflow-hidden font-serif">
-      {/* Floating Teddy & Clouds */}
+    <div className="relative min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-pink-100 flex flex-col items-center justify-center p-4 sm:p-6 overflow-hidden font-serif text-center">
+      {/* Floating Teddy (Scaled for mobile) */}
       <motion.img 
-        animate={{ y: [0, -15, 0] }} 
+        animate={{ y: [0, -12, 0] }} 
         transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
         src="/assets/teddy-cloud.png" 
-        className="absolute top-10 right-20 w-32 cursor-pointer"
+        className="absolute top-4 right-4 w-20 sm:w-28 md:w-36 pointer-events-none opacity-90"
         alt="Floating Teddy"
       />
 
+      {/* Main Responsive Title */}
       <motion.h1 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-5xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-400 mb-4"
+        className="text-3xl sm:text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-rose-400 to-orange-400 mb-4 px-2 leading-tight"
       >
-        Warning: Too much love ahead,<br/> proceed carefully
+        Warning: Too much love ahead,<br className="hidden sm:inline" /> proceed carefully 💖
       </motion.h1>
       
-      <p className="text-xl text-pink-400 italic mb-12 font-script">
-        A special surprise is waiting for you 🌸
+      <p className="text-base sm:text-xl text-pink-500 italic mb-8 sm:mb-12 font-medium">
+        A special birthday surprise is waiting for you 🌸
       </p>
 
-      <div className="flex gap-6 relative">
+      {/* Responsive Stacking Buttons */}
+      <div className="flex flex-col sm:flex-row gap-4 items-center justify-center w-full max-w-xs sm:max-w-none relative">
         <button 
           onClick={onEnter}
-          className="px-8 py-4 bg-pink-400 text-white rounded-full shadow-lg shadow-pink-300/50 hover:bg-pink-500 transition-all"
+          className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold rounded-full shadow-lg shadow-pink-300/60 hover:scale-105 active:scale-95 transition-all text-base"
         >
           Come With Me ☁️
         </button>
         
         <motion.button 
           onHoverStart={handleDodge}
+          onTouchStart={handleDodge}
+          onClick={handleDodge}
           animate={{ x: dodgeX, y: dodgeY }}
-          className="px-8 py-4 bg-white/50 backdrop-blur-sm text-gray-400 rounded-full border border-white/40"
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          className="w-full sm:w-auto px-8 py-4 bg-white/60 backdrop-blur-md text-gray-500 rounded-full border border-white/80 text-base"
         >
           Maybe Later...
         </motion.button>

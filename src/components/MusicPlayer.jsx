@@ -7,12 +7,11 @@ export default function MusicPlayer({ shouldPlay, src = "/assets/romantic-piano.
   const [isMuted, setIsMuted] = useState(false);
   const audioRef = useRef(null);
 
-  // Trigger audio playback when shouldPlay changes to true
   useEffect(() => {
     if (shouldPlay && audioRef.current) {
       audioRef.current.play()
         .then(() => setIsPlaying(true))
-        .catch((err) => console.log("Autoplay policy blocked sound:", err));
+        .catch(() => {});
     }
   }, [shouldPlay]);
 
@@ -24,7 +23,7 @@ export default function MusicPlayer({ shouldPlay, src = "/assets/romantic-piano.
     } else {
       audioRef.current.play()
         .then(() => setIsPlaying(true))
-        .catch((err) => console.log("Playback error:", err));
+        .catch(() => {});
     }
   };
 
@@ -35,21 +34,19 @@ export default function MusicPlayer({ shouldPlay, src = "/assets/romantic-piano.
   };
 
   return (
-    <div className="fixed top-5 right-5 z-50 flex items-center gap-3 bg-white/70 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-pink-200">
+    <div className="fixed top-3 right-3 sm:top-5 sm:right-5 z-50 flex items-center gap-2 bg-white/80 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-md border border-pink-200">
       <audio ref={audioRef} src={src} loop preload="auto" />
 
-      {/* Play / Pause Toggle */}
       <button 
         onClick={togglePlay}
-        className="flex items-center gap-2 text-xs font-semibold text-pink-600 hover:text-pink-700 transition-colors"
+        className="flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold text-pink-600 hover:text-pink-700"
       >
-        <Music className={`w-4 h-4 ${isPlaying ? 'animate-spin' : ''}`} />
-        <span>{isPlaying ? "Pause Music" : "Play Music"}</span>
+        <Music className={`w-3.5 h-3.5 ${isPlaying ? 'animate-spin' : ''}`} />
+        <span>{isPlaying ? "Pause" : "Music"}</span>
       </button>
 
-      {/* Mute Toggle */}
-      <button onClick={toggleMute} className="text-pink-500 hover:text-pink-700 transition-colors">
-        {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+      <button onClick={toggleMute} className="text-pink-500 hover:text-pink-700">
+        {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
       </button>
     </div>
   );
