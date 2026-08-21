@@ -1,20 +1,38 @@
 "use client";
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function LoveLetter({ onNext }) {
   const [opened, setOpened] = useState(false);
   const [step, setStep] = useState(0);
+  const scrollContainerRef = useRef(null);
+
+  // Reset scroll position to top whenever the step changes
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [step]);
 
   const steps = [
     {
       title: "Happiesttt Birthdayyy Zahinnn! 🥹❤️🎂✨😘",
       content: (
-        <p className="text-gray-800 leading-relaxed text-sm sm:text-base md:text-lg">
-          Aaj na main itnaaa khush hoon 🥹❤️ Is din ka itna wait kiya maine ki bas kab ye din aaye aur main tumhe wish karoonnn. 🫶🏻✨💋 Apno ko kitne mahine ho chuke hain, aur kitni baatein, ladaai-jhagde hue hain 😭😂❤️ phir bhi apan abhi tak saath hain. 🫂😘
-          <br /><br />
-          Shayad tum mere jaise friend ho, waisa koi mila hi nahi... na koi aur mil sakta hai. 🥹❤️ Aur bas yahi dua hai ki tum mere saath hamesha aise hi raho. 🤲🏻✨ Bhale main tumhe kitna bhi pareshan karun, ladun-jhagdu 😭😂, phir bhi bas apan saath rahein. 🫶🏻❤️😘
-        </p>
+        <div className="space-y-3 my-1">
+          {/* Eyes Photo Frame on First Page */}
+          <div className="w-full h-32 sm:h-44 rounded-2xl overflow-hidden shadow-lg border-2 border-pink-300 relative">
+            <img 
+              src="/assets/zahin-eyes.jpg" 
+              alt="Zahin Eyes" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <p className="text-gray-800 leading-relaxed text-sm sm:text-base md:text-lg">
+            Aaj na main itnaaa khush hoon 🥹❤️ Is din ka itna wait kiya maine ki bas kab ye din aaye aur main tumhe wish karoonnn. 🫶🏻✨💋 Apno ko kitne mahine ho chuke hain, aur kitni baatein, ladaai-jhagde hue hain 😭😂❤️ phir bhi apan abhi tak saath hain. 🫂😘
+            <br /><br />
+            Shayad tum mere jaise friend ho, waisa koi mila hi nahi... na koi aur mil sakta hai. 🥹❤️ Aur bas yahi dua hai ki tum mere saath hamesha aise hi raho. 🤲🏻✨ Bhale main tumhe kitna bhi pareshan karun, ladun-jhagdu 😭😂, phir bhi bas apan saath rahein. 🫶🏻❤️😘
+          </p>
+        </div>
       ),
       buttonText: "Read Next Part 💌"
     },
@@ -68,22 +86,13 @@ export default function LoveLetter({ onNext }) {
       buttonText: "Answer to Your Question 🥹❤️"
     },
     {
-      subtitle: "Aur ab jo shayari hai na... 🥹❤️💋",
+      subtitle: "Aur ab jo shayari hai na...woh tumhare ek sawaal ka jawab bhi hai. 🥹❤️💋",
       content: (
-        <div className="space-y-3 my-1">
-          <div className="w-full h-32 sm:h-44 rounded-2xl overflow-hidden shadow-lg border-2 border-pink-300 relative">
-            <img 
-              src="/assets/zahin-eyes.jpg" 
-              alt="Zahin Eyes" 
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="bg-pink-50/80 p-3.5 sm:p-5 rounded-2xl border border-pink-200 text-pink-950 italic text-xs sm:text-base font-medium leading-relaxed text-center shadow-inner">
-            “Tujhe kya khabar, kis tarah yaad kiya jaata hai,<br />
-            Har muskurahat ke peeche ek naam chhupaya jaata hai.<br />
-            Shikayat to tumne kar di ki ‘yaad nahi karte’,<br />
-            Hum woh hain jo duaon mein bhi sirf tumhe hi dohraya karte hain.” 🤲🏻❤️✨😘
-          </div>
+        <div className="bg-pink-50/80 p-4 sm:p-6 rounded-2xl border border-pink-200 text-pink-950 italic text-base sm:text-lg font-medium leading-relaxed sm:leading-loose text-center my-2 shadow-inner">
+          “Tujhe kya khabar, kis tarah yaad kiya jaata hai,<br />
+          Har muskurahat ke peeche ek naam chhupaya jaata hai.<br />
+          Shikayat to tumne kar di ki ‘yaad nahi karte’,<br />
+          Hum woh hain jo duaon mein bhi sirf tumhe hi dohraya karte hain.” 🤲🏻❤️✨😘
         </div>
       ),
       buttonText: "Final Message 💌"
@@ -140,7 +149,10 @@ export default function LoveLetter({ onNext }) {
             <span className="text-lg">🕯️</span>
           </div>
 
-          <div className="overflow-y-auto pr-1 max-h-[62dvh] my-auto">
+          <div 
+            ref={scrollContainerRef}
+            className="overflow-y-auto pr-1 max-h-[62dvh] my-auto scroll-smooth"
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={step}
