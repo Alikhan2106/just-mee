@@ -100,7 +100,7 @@ export default function LoveLetter({ onNext }) {
           </p>
         </div>
       ),
-      buttonText: "Reasons I Love You 💖"
+      buttonText: "Blow Candles 🎂"
     }
   ];
 
